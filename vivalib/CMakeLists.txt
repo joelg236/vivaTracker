@@ -1,10 +1,8 @@
-GET_FILENAME_COMPONENT(CURR_DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+get_filename_component(CURR_DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-FILE(GLOB files
+file(GLOB files
 	"*.h"
 	"*.cpp"
 )
 
-ADD_LIBRARY("${CURR_DIR_NAME}"  ${files})
-
-
+add_library("${CURR_DIR_NAME}"  ${files})

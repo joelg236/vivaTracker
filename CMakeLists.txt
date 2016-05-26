@@ -1,46 +1,42 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+cmake_minimum_required(VERSION 3.0)
 
-SET(PROJECT_NAME "vivaTracker")
-PROJECT("${PROJECT_NAME}")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+project("vivaTracker")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
 
 # add opencv package to the project
-FIND_PACKAGE( OpenCV REQUIRED )
-INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} ) 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS}) 
 
-MESSAGE(STATUS "Project Name: ${PROJECT_NAME}")
-MESSAGE(STATUS "    OpenCV version: ${OpenCV_VERSION} ")
-MESSAGE(STATUS "    libraries: ${OpenCV_LIBS}")
-MESSAGE(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
-
-FILE(GLOB files
-	"*.h"
-	"*.cpp"
-)
-ADD_EXECUTABLE(${PROJECT_NAME} ${files})
+file(GLOB files "*.h" "*.cpp")
+add_executable(${CMAKE_PROJECT_NAME} ${files})
+if(THREADS_HAVE_PTHREAD_ARG)
+  target_compile_options(PUBLIC ${CMAKE_PROJECT_NAME} "-pthread")
+endif()
+if(CMAKE_THREAD_LIBS_INIT)
+  target_link_libraries(${CMAKE_PROJECT_NAME} "${CMAKE_THREAD_LIBS_INIT}")
+endif()
 
 # Include libraries and trackers to project
-SUBDIRS(vivalib trackerlib)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/vivalib)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/trackerlib)
-TARGET_LINK_LIBRARIES( ${PROJECT_NAME} ${OpenCV_LIBS} trackerlib vivalib )
+subdirs(vivalib trackerlib)
+include_directories(${CMAKE_SOURCE_DIR}/vivalib)
+include_directories(${CMAKE_SOURCE_DIR}/trackerlib)
+target_link_libraries(${CMAKE_PROJECT_NAME} ${OpenCV_LIBS} trackerlib vivalib)
 
 #Needed because Struck tracker
-SET(EIGEN3_INCLUDE_DIRS "" CACHE FILEPATH "Path to eigen3 directory")
-INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIRS})
+set(EIGEN3_INCLUDE_DIRS "" CACHE FILEPATH "Path to eigen3 directory")
+include_directories(${EIGEN3_INCLUDE_DIRS})
 
 #Datasets and Trackers
-INCLUDE("macros.txt")
-CHECK_DATASETS()
-CHECK_TRACKERS()
+include("macros.cmake")
+check_datasets()
+check_trackers()
 
 # Copy resources in source folder to build folders
-FILE(GLOB hidden
-	".*"
-)
-FILE(GLOB resources
-  "*.*"
-)
-LIST(REMOVE_ITEM resources ${files} ${hidden} "${CMAKE_SOURCE_DIR}/CMakeLists.txt" "${CMAKE_SOURCE_DIR}/macros.txt" "${CMAKE_SOURCE_DIR}/precomp.h.in")
-FILE(COPY ${resources} DESTINATION "Debug")
-FILE(COPY ${resources} DESTINATION "Release")
+file(GLOB hidden ".*")
+file(GLOB resources "*.*")
+list(REMOVE_ITEM resources ${files} ${hidden} "${CMAKE_SOURCE_DIR}/CMakeLists.txt" "${CMAKE_SOURCE_DIR}/macros.cmake" "${CMAKE_SOURCE_DIR}/precomp.h.in")
+file(COPY ${resources} DESTINATION "Debug")
+file(COPY ${resources} DESTINATION "Release")

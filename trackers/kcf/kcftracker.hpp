@@ -94,7 +94,7 @@ public:
     // Constructor
     KCFTracker(bool hog = true, bool fixed_window = true, bool multiscale = true, bool lab = true);
 
-    // Initialize tracker 
+    // Initialize tracker
     //virtual void init(const cv::Rect &roi, cv::Mat image);
     // Update position based on the new frame
     //virtual cv::Rect update(cv::Mat image);

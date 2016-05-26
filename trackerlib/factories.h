@@ -46,7 +46,7 @@
 
 #ifdef WITH_KCF
     #include "kcftracker.hpp"
-#endif 
+#endif
 
 #ifdef WITH_KCF2
     #include "kcf.h"
@@ -58,15 +58,15 @@
 
 #ifdef WITH_OPENTLD
     #include "opentld.h"
-#endif 
+#endif
 
 #ifdef WITH_STRUCK
     #include "STRUCKtracker.h"
-#endif 
+#endif
 
 
 /**
- * TrackerFactory class 
+ * TrackerFactory class
  * A set of static class to generate a video sequence input , output and tracker implementation.
  * It uses the vivalib interfaces Input, Ouput and the Tracker interface
  */
@@ -88,17 +88,17 @@ private:
 public:
 
     /**
-     * Giving a string it determines what kind of sequence could be loaded and 
+     * Giving a string it determines what kind of sequence could be loaded and
      * returns an object follwing the vivalib::Input interface
      */
     static Ptr<Input> createInput(const string &sequence);
     /**
-     * Giving a string it determines what kind of output method to create and 
+     * Giving a string it determines what kind of output method to create and
      * returns an object following the vivalib::Output interface
      */
     static Ptr<Output> createOutput(const string &filename);
     /**
-     * Creates a tracker using the **method** identifier and passing the command line arguments 
+     * Creates a tracker using the **method** identifier and passing the command line arguments
      * for futher options configuration of the tracker.
      * This method should be used to create and return the current available trackers in the project.
      * see project's wiki for more details how to create your own tracker

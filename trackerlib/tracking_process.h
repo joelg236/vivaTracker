@@ -68,7 +68,7 @@ public:
      */
     void mouseMove(int x, int y);
     /**
-     *  Updates the corner locations corresponding to the 
+     *  Updates the corner locations corresponding to the
      *  current state.
      * @param x: x-coordinate value in the image
      * @param y: y-coordinate value in the image
@@ -86,7 +86,7 @@ public:
 };
 
 /**
- *  Color struct. 
+ *  Color struct.
  *  Custom color codes used by the Draw class
  *  The color are specified in BGR format (i.e., blue, gree, and red)
  */
@@ -122,8 +122,8 @@ public:
      * Constructor of a tracking process
      * @see Tracker
      * @see TrackerFactory
-     * @param trk : pointer to a Tracker object. 
-     * @param gt:  ground-truth defined as a 2D list points. 
+     * @param trk : pointer to a Tracker object.
+     * @param gt:  ground-truth defined as a 2D list points.
      * The ground-truth area for frame number N can be found by gt[N].
      */
     TrackingProcess(const Ptr<Tracker> &trk, const vector<vector<Point2f> > &gt):
@@ -137,7 +137,7 @@ public:
     void setTracker(const Ptr<Tracker> &trk);
     /**
      * Override from ProcessFrame class in vivalib
-     * Handles mouse left clicks. Used to defined new rectangular selection areas 
+     * Handles mouse left clicks. Used to defined new rectangular selection areas
      * in the displayed windows and intilialize the tracker.
      * @param x: x-coordinate of the clicked pixel in the image
      * @param y: y-coordinate of the clicked pixel in the image
@@ -162,7 +162,7 @@ public:
     void operator()(const size_t frameN, const Mat &frame, Mat &output);
 
     /**
-     * Returns the currently tracking area info. 
+     * Returns the currently tracking area info.
      * Annotated areas for each frame in the sequence.
      * It has the following format for each frame:
      * x1, y1, x2, y2, x3, y3, x4, y4
@@ -194,7 +194,7 @@ public:
                                  int thickness = 3);
 
     /**
-     * Draws a four-sided polygon defined for a list of points 
+     * Draws a four-sided polygon defined for a list of points
      * @param frameOut: the image canvas where to draw
      * @param corners: list of corners locations of the four-sided polygon
      * @param color: color of selected area lines

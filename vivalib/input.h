@@ -59,9 +59,9 @@ namespace viva
     public:
         /**
          *  Input class constructor
-         *  @param size: force the input class to an specific size resolution. 
+         *  @param size: force the input class to an specific size resolution.
          *               Default value of (-1,-1) will use the original medium resolution.
-         *  @param conversionFlag: OpenCV conversion flag e.g., CV_RGB2GRAY. 
+         *  @param conversionFlag: OpenCV conversion flag e.g., CV_RGB2GRAY.
          *               Default value of -1 will do not convert the original feed.
          */
         Input(const Size &size = Size(-1, -1),
@@ -85,7 +85,7 @@ namespace viva
         virtual ~Input(){}
 
         /**
-         *  Set the OpenCV conversion flag value e.g., CV_BGR2GRAY. 
+         *  Set the OpenCV conversion flag value e.g., CV_BGR2GRAY.
          *  Any posterior call to processFrame will return an image
          *  using this conversion type flag.
          */
@@ -109,8 +109,8 @@ namespace viva
             return _size.height;
         }
         /**
-         * Returns the original input size. 
-         * This will be the same to the current image's width and height if 
+         * Returns the original input size.
+         * This will be the same to the current image's width and height if
          * it's created with size(-1,-1).
          */
 		Size getOrgSize()
@@ -185,7 +185,7 @@ namespace viva
     typedef VideoInput SequenceInput;
     
     /**
-     * ImageListInput to process folder containing images of 
+     * ImageListInput to process folder containing images of
      * supported OpenCV formats.
      */
     class ImageListInput: public Input
@@ -207,7 +207,7 @@ namespace viva
                        int colorFlag = -1,
                        int loops = 1);
         /**
-         * ImageListInput constructor using a vector of filenames 
+         * ImageListInput constructor using a vector of filenames
          * containing the images of the sequence in order.
          */
         ImageListInput(const vector<string> &files,

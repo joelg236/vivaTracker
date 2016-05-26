@@ -557,7 +557,7 @@ private:
     
     // GAUSSIAN_SHAPED_LABELS
     //    Gaussian-shaped labels for all shifts of a sample.
-    // 
+    //
     //    LABELS = GAUSSIAN_SHAPED_LABELS(SIGMA, SZ)
     //    Creates an array of labels (regression targets) for all shifts of a
     //    sample of dimensions SZ. The output will have size SZ, representing
@@ -590,7 +590,7 @@ private:
     //  The parameters lambda is just a regularization term to avoid division by zero.
     static void divSpectrums( InputArray _srcA, InputArray _srcB,
                              OutputArray _dst, int flags, bool conjB = false ,double lambda = 1e-4);
-    //  Sum all the real values of the spectrum. 
+    //  Sum all the real values of the spectrum.
     static double sumSpectrum(const Mat &mat, const ConfigParams &params);
 };
 

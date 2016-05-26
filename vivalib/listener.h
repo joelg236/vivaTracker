@@ -62,9 +62,9 @@ namespace viva
     public:
         /**
          * Will be triggered at any mouse event, the type of the event
-         * is especified in the first integer @param event. 
+         * is especified in the first integer @param event.
          * event could be one of the following OpenCV values
-         * EVENT_LBUTTONDOWN, EVENT_RBUTTONDOWN, EVENT_MBUTTONDOWN, EVENT_MOUSEMOVE. 
+         * EVENT_LBUTTONDOWN, EVENT_RBUTTONDOWN, EVENT_MBUTTONDOWN, EVENT_MOUSEMOVE.
          * @param x the x coordinates of the mouse cursor
          * @param y the y coordinates of the mouse cursor
          * @param flgas the flags passed from OpenCV

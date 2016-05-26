@@ -51,7 +51,7 @@ using namespace cv;
 namespace viva {
 
     /**
-     * Thread safe guard created to ensure all threads are joing 
+     * Thread safe guard created to ensure all threads are joing
      * when exiting their scope.
      */
     class thread_guard
@@ -182,7 +182,7 @@ namespace viva {
     };
     
     /**
-     * Processor class. 
+     * Processor class.
      * Entry point of a vivalib program
      * We need to define an Input , ProcessFrame and Output(optional) before starting to run a processor
      */
@@ -286,7 +286,7 @@ namespace viva {
             _process = process;
         }
         /**
-         * Makes to pause the sequence at the fist frame. Waiting for the user 
+         * Makes to pause the sequence at the fist frame. Waiting for the user
          * to hit the SPACE key in the keyboard to continue the execution of the sequence.
          * It's usefull when manual user selection is needed before running the algorithm
          */
@@ -305,7 +305,7 @@ namespace viva {
 
         /**
          * Method to execute after defining the Processor's Input, ProcessFrame, and Output(optional)
-         * The input, process and output will run in three different threads and 
+         * The input, process and output will run in three different threads and
          * will comunicate using BuffedChannels between them.
          * To exit you should press the ESC key. The SPACE key will allow to pause and/or continue the video
          * sequence

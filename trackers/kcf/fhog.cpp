@@ -85,7 +85,7 @@ int getFeatureMaps(const IplImage* image, const int k, CvLSVMFeatureMapCaskade *
     int i, j, kk, c, ii, jj, d;
     float  * datadx, * datady;
     
-    int   ch; 
+    int   ch;
     float magnitude, x, y, tx, ty;
     
     IplImage * dx, * dy;
@@ -109,14 +109,14 @@ int getFeatureMaps(const IplImage* image, const int k, CvLSVMFeatureMapCaskade *
 
     numChannels = image->nChannels;
 
-    dx    = cvCreateImage(cvSize(image->width, image->height), 
+    dx    = cvCreateImage(cvSize(image->width, image->height),
                           IPL_DEPTH_32F, 3);
-    dy    = cvCreateImage(cvSize(image->width, image->height), 
+    dy    = cvCreateImage(cvSize(image->width, image->height),
                           IPL_DEPTH_32F, 3);
 
     sizeX = width  / k;
     sizeY = height / k;
-    px    = 3 * NUM_SECTOR; 
+    px    = 3 * NUM_SECTOR;
     p     = px;
     stringSize = sizeX * p;
     allocFeatureMapObject(map, sizeX, sizeY, p);
@@ -162,17 +162,17 @@ int getFeatureMaps(const IplImage* image, const int k, CvLSVMFeatureMapCaskade *
             
             max  = boundary_x[0] * x + boundary_y[0] * y;
             maxi = 0;
-            for (kk = 0; kk < NUM_SECTOR; kk++) 
+            for (kk = 0; kk < NUM_SECTOR; kk++)
             {
                 dotProd = boundary_x[kk] * x + boundary_y[kk] * y;
-                if (dotProd > max) 
+                if (dotProd > max)
                 {
                     max  = dotProd;
                     maxi = kk;
                 }
-                else 
+                else
                 {
-                    if (-dotProd > max) 
+                    if (-dotProd > max)
                     {
                         max  = -dotProd;
                         maxi = kk + NUM_SECTOR;
@@ -180,7 +180,7 @@ int getFeatureMaps(const IplImage* image, const int k, CvLSVMFeatureMapCaskade *
                 }
             }
             alfa[j * width * 2 + i * 2    ] = maxi % NUM_SECTOR;
-            alfa[j * width * 2 + i * 2 + 1] = maxi;  
+            alfa[j * width * 2 + i * 2 + 1] = maxi;
         }/*for(i = 0; i < width; i++)*/
     }/*for(j = 0; j < height; j++)*/
 
@@ -200,15 +200,15 @@ int getFeatureMaps(const IplImage* image, const int k, CvLSVMFeatureMapCaskade *
     {
         b_x = k / 2 + j + 0.5f;
         a_x = k / 2 - j - 0.5f;
-        w[j * 2    ] = 1.0f/a_x * ((a_x * b_x) / ( a_x + b_x)); 
-        w[j * 2 + 1] = 1.0f/b_x * ((a_x * b_x) / ( a_x + b_x));  
+        w[j * 2    ] = 1.0f/a_x * ((a_x * b_x) / ( a_x + b_x));
+        w[j * 2 + 1] = 1.0f/b_x * ((a_x * b_x) / ( a_x + b_x));
     }/*for(j = 0; j < k / 2; j++)*/
     for(j = k / 2; j < k; j++)
     {
         a_x = j - k / 2 + 0.5f;
         b_x =-j + k / 2 - 0.5f + k;
-        w[j * 2    ] = 1.0f/a_x * ((a_x * b_x) / ( a_x + b_x)); 
-        w[j * 2 + 1] = 1.0f/b_x * ((a_x * b_x) / ( a_x + b_x));  
+        w[j * 2    ] = 1.0f/a_x * ((a_x * b_x) / ( a_x + b_x));
+        w[j * 2 + 1] = 1.0f/b_x * ((a_x * b_x) / ( a_x + b_x));
     }/*for(j = k / 2; j < k; j++)*/
 
     for(i = 0; i < sizeY; i++)
@@ -219,40 +219,40 @@ int getFeatureMaps(const IplImage* image, const int k, CvLSVMFeatureMapCaskade *
         {
           for(jj = 0; jj < k; jj++)
           {
-            if ((i * k + ii > 0) && 
-                (i * k + ii < height - 1) && 
-                (j * k + jj > 0) && 
+            if ((i * k + ii > 0) &&
+                (i * k + ii < height - 1) &&
+                (j * k + jj > 0) &&
                 (j * k + jj < width  - 1))
             {
               d = (k * i + ii) * width + (j * k + jj);
-              (*map)->map[ i * stringSize + j * (*map)->numFeatures + alfa[d * 2    ]] += 
+              (*map)->map[ i * stringSize + j * (*map)->numFeatures + alfa[d * 2    ]] +=
                   r[d] * w[ii * 2] * w[jj * 2];
-              (*map)->map[ i * stringSize + j * (*map)->numFeatures + alfa[d * 2 + 1] + NUM_SECTOR] += 
+              (*map)->map[ i * stringSize + j * (*map)->numFeatures + alfa[d * 2 + 1] + NUM_SECTOR] +=
                   r[d] * w[ii * 2] * w[jj * 2];
-              if ((i + nearest[ii] >= 0) && 
+              if ((i + nearest[ii] >= 0) &&
                   (i + nearest[ii] <= sizeY - 1))
               {
-                (*map)->map[(i + nearest[ii]) * stringSize + j * (*map)->numFeatures + alfa[d * 2    ]             ] += 
+                (*map)->map[(i + nearest[ii]) * stringSize + j * (*map)->numFeatures + alfa[d * 2    ]             ] +=
                   r[d] * w[ii * 2 + 1] * w[jj * 2 ];
-                (*map)->map[(i + nearest[ii]) * stringSize + j * (*map)->numFeatures + alfa[d * 2 + 1] + NUM_SECTOR] += 
+                (*map)->map[(i + nearest[ii]) * stringSize + j * (*map)->numFeatures + alfa[d * 2 + 1] + NUM_SECTOR] +=
                   r[d] * w[ii * 2 + 1] * w[jj * 2 ];
               }
-              if ((j + nearest[jj] >= 0) && 
+              if ((j + nearest[jj] >= 0) &&
                   (j + nearest[jj] <= sizeX - 1))
               {
-                (*map)->map[i * stringSize + (j + nearest[jj]) * (*map)->numFeatures + alfa[d * 2    ]             ] += 
+                (*map)->map[i * stringSize + (j + nearest[jj]) * (*map)->numFeatures + alfa[d * 2    ]             ] +=
                   r[d] * w[ii * 2] * w[jj * 2 + 1];
-                (*map)->map[i * stringSize + (j + nearest[jj]) * (*map)->numFeatures + alfa[d * 2 + 1] + NUM_SECTOR] += 
+                (*map)->map[i * stringSize + (j + nearest[jj]) * (*map)->numFeatures + alfa[d * 2 + 1] + NUM_SECTOR] +=
                   r[d] * w[ii * 2] * w[jj * 2 + 1];
               }
-              if ((i + nearest[ii] >= 0) && 
-                  (i + nearest[ii] <= sizeY - 1) && 
-                  (j + nearest[jj] >= 0) && 
+              if ((i + nearest[ii] >= 0) &&
+                  (i + nearest[ii] <= sizeY - 1) &&
+                  (j + nearest[jj] >= 0) &&
                   (j + nearest[jj] <= sizeX - 1))
               {
-                (*map)->map[(i + nearest[ii]) * stringSize + (j + nearest[jj]) * (*map)->numFeatures + alfa[d * 2    ]             ] += 
+                (*map)->map[(i + nearest[ii]) * stringSize + (j + nearest[jj]) * (*map)->numFeatures + alfa[d * 2    ]             ] +=
                   r[d] * w[ii * 2 + 1] * w[jj * 2 + 1];
-                (*map)->map[(i + nearest[ii]) * stringSize + (j + nearest[jj]) * (*map)->numFeatures + alfa[d * 2 + 1] + NUM_SECTOR] += 
+                (*map)->map[(i + nearest[ii]) * stringSize + (j + nearest[jj]) * (*map)->numFeatures + alfa[d * 2 + 1] + NUM_SECTOR] +=
                   r[d] * w[ii * 2 + 1] * w[jj * 2 + 1];
               }
             }
@@ -275,7 +275,7 @@ int getFeatureMaps(const IplImage* image, const int k, CvLSVMFeatureMapCaskade *
 }
 
 /*
-// Feature map Normalization and Truncation 
+// Feature map Normalization and Truncation
 //
 // API
 // int normalizeAndTruncate(featureMap *map, const float alfa);
@@ -412,7 +412,7 @@ int normalizeAndTruncate(CvLSVMFeatureMapCaskade *map, const float alfa)
 // Error status
 */
 int PCAFeatureMaps(CvLSVMFeatureMapCaskade *map)
-{ 
+{
     int i,j, ii, jj, k;
     int sizeX, sizeY, p,  pp, xp, yp, pos1, pos2;
     float * newData;
@@ -467,7 +467,7 @@ int PCAFeatureMaps(CvLSVMFeatureMapCaskade *map)
                 }/*for(jj = 0; jj < xp; jj++)*/
                 newData[pos2 + k] = val * nx;
                 k++;
-            } /*for(ii = 0; ii < yp; ii++)*/           
+            } /*for(ii = 0; ii < yp; ii++)*/
         }/*for(j = 0; j < sizeX; j++)*/
     }/*for(i = 0; i < sizeY; i++)*/
 //swop data
@@ -484,7 +484,7 @@ int PCAFeatureMaps(CvLSVMFeatureMapCaskade *map)
 
 //modified from "lsvmc_routine.cpp"
 
-int allocFeatureMapObject(CvLSVMFeatureMapCaskade **obj, const int sizeX, 
+int allocFeatureMapObject(CvLSVMFeatureMapCaskade **obj, const int sizeX,
                           const int sizeY, const int numFeatures)
 {
     int i;
@@ -492,7 +492,7 @@ int allocFeatureMapObject(CvLSVMFeatureMapCaskade **obj, const int sizeX,
     (*obj)->sizeX       = sizeX;
     (*obj)->sizeY       = sizeY;
     (*obj)->numFeatures = numFeatures;
-    (*obj)->map = (float *) malloc(sizeof (float) * 
+    (*obj)->map = (float *) malloc(sizeof (float) *
                                   (sizeX * sizeY  * numFeatures));
     for(i = 0; i < sizeX * sizeY * numFeatures; i++)
     {

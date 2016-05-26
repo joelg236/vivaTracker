@@ -1,28 +1,28 @@
-/* 
+/*
  * Struck: Structured Output Tracking with Kernels
- * 
+ *
  * Code to accompany the paper:
  *   Struck: Structured Output Tracking with Kernels
  *   Sam Hare, Amir Saffari, Philip H. S. Torr
  *   International Conference on Computer Vision (ICCV), 2011
- * 
+ *
  * Copyright (C) 2011 Sam Hare, Oxford Brookes University, Oxford, UK
- * 
+ *
  * This file is part of Struck.
- * 
+ *
  * Struck is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Struck is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Struck.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "STRUCKtracker.h"
@@ -96,7 +96,7 @@ void STRUCKtracker::Reset()
 		case Config::kFeatureTypeHaar:
 			m_features.push_back(new HaarFeatures(m_config));
 			m_needsIntegralImage = true;
-			break;			
+			break;
 		case Config::kFeatureTypeRaw:
 			m_features.push_back(new RawFeatures(m_config));
 			break;
@@ -130,7 +130,7 @@ void STRUCKtracker::Reset()
 		m_features.push_back(f);
 		
 		MultiKernel* k = new MultiKernel(m_kernels, featureCounts);
-		m_kernels.push_back(k);		
+		m_kernels.push_back(k);
 	}
 	
 	m_pLearner = new LaRank(m_config, *m_features.back(), *m_kernels.back());
@@ -172,7 +172,7 @@ void STRUCKtracker::Track(const cv::Mat& frame)
 	double bestScore = -DBL_MAX;
 	int bestInd = -1;
 	for (int i = 0; i < (int)keptRects.size(); ++i)
-	{		
+	{
 		if (scores[i] > bestScore)
 		{
 			bestScore = scores[i];
@@ -184,7 +184,7 @@ void STRUCKtracker::Track(const cv::Mat& frame)
 	{
 		m_bb = keptRects[bestInd];
 		UpdateLearner(image);
-#if VERBOSE		
+#if VERBOSE
 		cout << "track score: " << bestScore << endl;
 #endif
 	}
@@ -204,7 +204,7 @@ void STRUCKtracker::UpdateLearner(const ImageRep& image)
 		keptRects.push_back(rects[i]);
 	}
 		
-#if VERBOSE		
+#if VERBOSE
 	cout << keptRects.size() << " samples" << endl;
 #endif
 		

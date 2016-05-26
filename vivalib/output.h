@@ -55,7 +55,7 @@ namespace viva
         int  _conversionFlag;
     public:
         /**
-         * Output constructor defining the resolution and 
+         * Output constructor defining the resolution and
          * video type using OpenCV conversion flags e.g., CV_BGR2GRAY
          */
         Output(const Size &size = Size(-1, -1),
@@ -135,7 +135,7 @@ namespace viva
     /**
      * OpenCV supported CODEC value outputs
      * The LIST value is only available for the Windows Platform
-     * where a popup will appear, listing all available codecs and allowing 
+     * where a popup will appear, listing all available codecs and allowing
      * the user to select one.
      */
     enum class CODEC : int {
@@ -152,8 +152,8 @@ namespace viva
     };
 
     /**
-     * Video Output class. 
-     * Generates a video file using an specified coded, resolution, 
+     * Video Output class.
+     * Generates a video file using an specified coded, resolution,
      * frame per second rate and conversionflag
      */
     class VideoOutput: public Output
@@ -168,7 +168,7 @@ namespace viva
         
     public:
         /**
-         * Creates a Video Output using the 
+         * Creates a Video Output using the
          * @param filename: video file filename
          * @param size: scale the final video output to the desired resolution
          * @param fps: frame per seconds

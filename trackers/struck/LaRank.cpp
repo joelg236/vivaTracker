@@ -1,28 +1,28 @@
-/* 
+/*
  * Struck: Structured Output Tracking with Kernels
- * 
+ *
  * Code to accompany the paper:
  *   Struck: Structured Output Tracking with Kernels
  *   Sam Hare, Amir Saffari, Philip H. S. Torr
  *   International Conference on Computer Vision (ICCV), 2011
- * 
+ *
  * Copyright (C) 2011 Sam Hare, Oxford Brookes University, Oxford, UK
- * 
+ *
  * This file is part of Struck.
- * 
+ *
  * Struck is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Struck is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Struck.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "LaRank.h"
@@ -160,12 +160,12 @@ void LaRank::SMOStep(int ipos, int ineg)
 
 #if VERBOSE
 	cout << "SMO: gpos:" << svp->g << " gneg:" << svn->g << endl;
-#endif	
+#endif
 	if ((svp->g - svn->g) < 1e-5)
 	{
 #if VERBOSE
 		cout << "SMO: skipping" << endl;
-#endif		
+#endif
 	}
 	else
 	{
@@ -185,7 +185,7 @@ void LaRank::SMOStep(int ipos, int ineg)
 		}
 #if VERBOSE
 		cout << "SMO: " << ipos << "," << ineg << " -- " << svp->b << "," << svn->b << " (" << l << ")" << endl;
-#endif		
+#endif
 	}
 	
 	// check if we should remove either sv now
@@ -363,7 +363,7 @@ void LaRank::RemoveSupportVector(int ind)
 {
 #if VERBOSE
 	cout << "Removing SV: " << ind << endl;
-#endif	
+#endif
 
 	m_svs[ind]->x->refCount--;
 	if (m_svs[ind]->x->refCount == 0)
@@ -444,5 +444,5 @@ void LaRank::BudgetMaintenanceRemove()
 	{
 		SupportVector& svi = *m_svs[i];
 		svi.g = -Loss(svi.x->yv[svi.y],svi.x->yv[svi.x->y]) - Evaluate(svi.x->x[svi.y], svi.x->yv[svi.y]);
-	}	
+	}
 }

@@ -44,7 +44,7 @@
 #include <sys/types.h>
 
 #ifdef _MSC_VER
-	#include "direntVS.h" 
+	#include "direntVS.h"
     #include <time.h>
 #else
 	#include <dirent.h>

@@ -47,7 +47,7 @@ namespace viva
   
     /**
      * BufferedChannel template class
-     * The class is used to comunicate data between two threads 
+     * The class is used to comunicate data between two threads
      * using a producer-consurmer philosophy and a FIFO order.
      */
     template <class Data>
@@ -170,7 +170,7 @@ namespace viva
     }
     
     /**
-     *  A Buffered Channel of OpenCV Mat datatype. 
+     *  A Buffered Channel of OpenCV Mat datatype.
      */
     typedef BufferedChannel<Mat> BufferedImageChannel;
     

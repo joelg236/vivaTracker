@@ -1,7 +1,7 @@
-/* 
+/*
 Author: Christian Bailer
-Contact address: Christian.Bailer@dfki.de 
-Department Augmented Vision DFKI 
+Contact address: Christian.Bailer@dfki.de
+Department Augmented Vision DFKI
 
                           License Agreement
                For Open Source Computer Vision Library

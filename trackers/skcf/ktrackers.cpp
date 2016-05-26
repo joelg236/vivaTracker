@@ -625,7 +625,7 @@ void KTrackers::gaussian_shaped_labels(float sigma, const Size &sz, Mat &labels)
 
 //    rs[0] = cs[0] = exp(0);
 //    size_t i;
-//    
+//
 //    for (i = 1; i <= sz.height/2; ++i)
 //    {
 //        float v = exp(w * float(i) * float(i));
@@ -1336,9 +1336,9 @@ double KFlow::transform(const vector<Point2f> &start,
 //                        const KFlowConfigParams &p)
 //{
 //    int pStart = 0, size = start.size();
-//    
+//
 //    vector<float> scales;
-//    
+//
 //    for (int i = pStart; i < (pStart+ size); i++)
 //    {
 //        for (int j = i + 1; j < (pStart+ size); j++)
@@ -1347,11 +1347,11 @@ double KFlow::transform(const vector<Point2f> &start,
 //            Point2f diffTS = tracked[i] - tracked[j];
 //            float dST = norm(diffST);
 //            float dTS = norm(diffTS);
-//            
+//
 //            scales.push_back(dTS/dST);
 //        }
 //    }
-//    
+//
 //    float fSc = (scales.size() > 0)?
 //    getMedianUnmanaged(&scales[0],(int)scales.size()): 1.f;
 //

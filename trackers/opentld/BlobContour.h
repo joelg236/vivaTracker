@@ -16,84 +16,80 @@ typedef CvSeq* t_PointList;
 
 
 //! Max order of calculated moments
-#define MAX_MOMENTS_ORDER		3
+#define MAX_MOMENTS_ORDER       3
 
 
 //! Blob contour class (in crack code)
-class CBlobContour
-{
-	friend class CBlob;
-	friend class CBlobProperties; //AO
-	
-public:
-	//! Constructors
-	CBlobContour();
-	CBlobContour(CvPoint startPoint, CvMemStorage *storage );
-	//! Copy constructor
-	CBlobContour( CBlobContour *source );
+class CBlobContour {
+    friend class CBlob;
+    friend class CBlobProperties; //AO
 
-	~CBlobContour();
-	//! Assigment operator
-	CBlobContour& operator=( const CBlobContour &source );
+  public:
+    //! Constructors
+    CBlobContour();
+    CBlobContour(CvPoint startPoint, CvMemStorage *storage );
+    //! Copy constructor
+    CBlobContour( CBlobContour *source );
 
-	//! Add chain code to contour
-	void AddChainCode(t_chainCode code);
+    ~CBlobContour();
+    //! Assigment operator
+    CBlobContour& operator=( const CBlobContour& source );
 
-	//! Return freeman chain coded contour
-	t_chainCodeList GetChainCode()
-	{
-		return m_contour;
-	}
+    //! Add chain code to contour
+    void AddChainCode(t_chainCode code);
 
-	bool IsEmpty()
-	{
-		return m_contour == NULL || m_contour->total == 0;
-	}
+    //! Return freeman chain coded contour
+    t_chainCodeList GetChainCode() {
+        return m_contour;
+    }
 
-	//! Return all contour points
-	t_chainCodeList GetContourPoints();
+    bool IsEmpty() {
+        return m_contour == NULL || m_contour->total == 0;
+    }
 
-protected:	
+    //! Return all contour points
+    t_chainCodeList GetContourPoints();
 
-	CvPoint GetStartPoint() const
-	{
-		return m_startPoint;
-	}
+  protected:
 
-	//! Clears chain code contour
-	void ResetChainCode();
-	
+    CvPoint GetStartPoint() const {
+        return m_startPoint;
+    }
 
-	
-	//! Computes area from contour
-	double GetArea();
-	//! Computes perimeter from contour
-	double GetPerimeter();
-	//! Get contour moment (p,q up to MAX_CALCULATED_MOMENTS)
-	double GetMoment(int p, int q);
-
-	//! Crack code list
-	t_chainCodeList m_contour; 	
-
-private:
-	//! Starting point of the contour
-	CvPoint m_startPoint;
-	//! All points from the contour
-	t_PointList m_contourPoints;
+    //! Clears chain code contour
+    void ResetChainCode();
 
 
 
-	//! Computed area from contour
-	double m_area;
-	//! Computed perimeter from contour
-	double m_perimeter;
-	//! Computed moments from contour
-	CvMoments m_moments;
+    //! Computes area from contour
+    double GetArea();
+    //! Computes perimeter from contour
+    double GetPerimeter();
+    //! Get contour moment (p,q up to MAX_CALCULATED_MOMENTS)
+    double GetMoment(int p, int q);
 
-	//! Pointer to storage
-	CvMemStorage *m_parentStorage;
+    //! Crack code list
+    t_chainCodeList m_contour;
+
+  private:
+    //! Starting point of the contour
+    CvPoint m_startPoint;
+    //! All points from the contour
+    t_PointList m_contourPoints;
+
+
+
+    //! Computed area from contour
+    double m_area;
+    //! Computed perimeter from contour
+    double m_perimeter;
+    //! Computed moments from contour
+    CvMoments m_moments;
+
+    //! Pointer to storage
+    CvMemStorage *m_parentStorage;
 };
 
-#endif	//!BLOBCONTOUR_H_INCLUDED
+#endif  //!BLOBCONTOUR_H_INCLUDED
 
 

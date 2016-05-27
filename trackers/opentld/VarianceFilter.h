@@ -31,15 +31,13 @@
 #include "IntegralImage.h"
 #include "DetectionResult.h"
 
-namespace tld
-{
+namespace tld {
 
-class VarianceFilter
-{
+class VarianceFilter {
     IntegralImage<int>* integralImg;
     IntegralImage<long long>* integralImg_squared;
 
-public:
+  public:
     bool enabled;
     int *windowOffsets;
 
@@ -51,7 +49,7 @@ public:
     virtual ~VarianceFilter();
 
     void release();
-    void nextIteration(const cv::Mat &img);
+    void nextIteration(const cv::Mat& img);
     bool filter(int idx);
     float calcVariance(int *off);
 };

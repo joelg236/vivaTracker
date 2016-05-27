@@ -34,8 +34,7 @@
 /**
  * Capturing method
  */
-enum ImacqMethod
-{
+enum ImacqMethod {
     IMACQ_IMGS, //!< Images
     IMACQ_CAM, //!< Camera
     IMACQ_VID, //!< Video
@@ -43,8 +42,7 @@ enum ImacqMethod
     IMACQ_STREAM //!< Stream
 };
 
-typedef struct
-{
+typedef struct {
     int method;
     const char *imgPath;
     CvCapture *capture;

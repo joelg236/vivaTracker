@@ -143,13 +143,13 @@
  * only defined for compatibility.  These macros should always return false
  * on Windows.
  */
-#define	S_ISFIFO(mode) (((mode) & S_IFMT) == S_IFIFO)
-#define	S_ISDIR(mode)  (((mode) & S_IFMT) == S_IFDIR)
-#define	S_ISREG(mode)  (((mode) & S_IFMT) == S_IFREG)
-#define	S_ISLNK(mode)  (((mode) & S_IFMT) == S_IFLNK)
-#define	S_ISSOCK(mode) (((mode) & S_IFMT) == S_IFSOCK)
-#define	S_ISCHR(mode)  (((mode) & S_IFMT) == S_IFCHR)
-#define	S_ISBLK(mode)  (((mode) & S_IFMT) == S_IFBLK)
+#define S_ISFIFO(mode) (((mode) & S_IFMT) == S_IFIFO)
+#define S_ISDIR(mode)  (((mode) & S_IFMT) == S_IFDIR)
+#define S_ISREG(mode)  (((mode) & S_IFMT) == S_IFREG)
+#define S_ISLNK(mode)  (((mode) & S_IFMT) == S_IFLNK)
+#define S_ISSOCK(mode) (((mode) & S_IFMT) == S_IFSOCK)
+#define S_ISCHR(mode)  (((mode) & S_IFMT) == S_IFCHR)
+#define S_ISBLK(mode)  (((mode) & S_IFMT) == S_IFBLK)
 
 /* Return the exact length of d_namlen without zero terminator */
 #define _D_EXACT_NAMLEN(p) ((p)->d_namlen)
@@ -246,8 +246,7 @@ static void dirent_set_errno (int error);
  */
 static _WDIR*
 _wopendir(
-    const wchar_t *dirname)
-{
+    const wchar_t *dirname) {
     _WDIR *dirp = NULL;
     int error;
 
@@ -287,16 +286,17 @@ _wopendir(
                 p = dirp->patt + n;
                 if (dirp->patt < p) {
                     switch (p[-1]) {
-                    case '\\':
-                    case '/':
-                    case ':':
-                        /* Directory ends in path separator, e.g. c:\temp\ */
-                        /*NOP*/;
-                        break;
+                        case '\\':
+                        case '/':
+                        case ':':
+                            /* Directory ends in path separator, e.g. c:\temp\ */
+                            /*NOP*/
+                            ;
+                            break;
 
-                    default:
-                        /* Directory name doesn't end in path separator */
-                        *p++ = '\\';
+                        default:
+                            /* Directory name doesn't end in path separator */
+                            *p++ = '\\';
                     }
                 }
                 *p++ = '*';
@@ -345,8 +345,7 @@ _wopendir(
  */
 static struct _wdirent*
 _wreaddir(
-    _WDIR *dirp)
-{
+    _WDIR *dirp) {
     WIN32_FIND_DATAW *datap;
     struct _wdirent *entp;
 
@@ -355,7 +354,7 @@ _wreaddir(
     if (datap) {
         size_t n;
         DWORD attr;
-        
+
         /* Pointer to directory entry to return */
         entp = &dirp->ent;
 
@@ -405,8 +404,7 @@ _wreaddir(
  */
 static int
 _wclosedir(
-    _WDIR *dirp)
-{
+    _WDIR *dirp) {
     int ok;
     if (dirp) {
 
@@ -429,7 +427,7 @@ _wclosedir(
     } else {
         /* Invalid directory stream */
         dirent_set_errno (EBADF);
-        ok = /*failure*/-1;
+        ok = /*failure*/ -1;
     }
     return ok;
 }
@@ -440,8 +438,7 @@ _wclosedir(
  */
 static void
 _wrewinddir(
-    _WDIR* dirp)
-{
+    _WDIR* dirp) {
     if (dirp) {
         /* Release existing search handle */
         if (dirp->handle != INVALID_HANDLE_VALUE) {
@@ -456,8 +453,7 @@ _wrewinddir(
 /* Get first directory entry (internal) */
 static WIN32_FIND_DATAW*
 dirent_first(
-    _WDIR *dirp)
-{
+    _WDIR *dirp) {
     WIN32_FIND_DATAW *datap;
 
     /* Open directory and retrieve the first entry */
@@ -481,8 +477,7 @@ dirent_first(
 /* Get next directory entry (internal) */
 static WIN32_FIND_DATAW*
 dirent_next(
-    _WDIR *dirp)
-{
+    _WDIR *dirp) {
     WIN32_FIND_DATAW *p;
 
     /* Get next directory entry */
@@ -520,8 +515,7 @@ dirent_next(
  */
 static DIR*
 opendir(
-    const char *dirname)
-{
+    const char *dirname) {
     struct DIR *dirp;
     int error;
 
@@ -590,8 +584,7 @@ opendir(
  */
 static struct dirent*
 readdir(
-    DIR *dirp)
-{
+    DIR *dirp) {
     WIN32_FIND_DATAW *datap;
     struct dirent *entp;
 
@@ -603,7 +596,7 @@ readdir(
 
         /* Attempt to convert file name to multi-byte string */
         error = dirent_wcstombs_s(
-            &n, dirp->ent.d_name, PATH_MAX, datap->cFileName, PATH_MAX);
+                    &n, dirp->ent.d_name, PATH_MAX, datap->cFileName, PATH_MAX);
 
         /*
          * If the file name cannot be represented by a multi-byte string,
@@ -617,8 +610,8 @@ readdir(
          */
         if (error  &&  datap->cAlternateFileName[0] != '\0') {
             error = dirent_wcstombs_s(
-                &n, dirp->ent.d_name, PATH_MAX,
-                datap->cAlternateFileName, PATH_MAX);
+                        &n, dirp->ent.d_name, PATH_MAX,
+                        datap->cAlternateFileName, PATH_MAX);
         }
 
         if (!error) {
@@ -673,8 +666,7 @@ readdir(
  */
 static int
 closedir(
-    DIR *dirp)
-{
+    DIR *dirp) {
     int ok;
     if (dirp) {
 
@@ -689,7 +681,7 @@ closedir(
 
         /* Invalid directory stream */
         dirent_set_errno (EBADF);
-        ok = /*failure*/-1;
+        ok = /*failure*/ -1;
 
     }
     return ok;
@@ -700,8 +692,7 @@ closedir(
  */
 static void
 rewinddir(
-    DIR* dirp)
-{
+    DIR* dirp) {
     /* Rewind wide-character string directory stream */
     _wrewinddir (dirp->wdirp);
 }
@@ -713,8 +704,7 @@ dirent_mbstowcs_s(
     wchar_t *wcstr,
     size_t sizeInWords,
     const char *mbstr,
-    size_t count)
-{
+    size_t count) {
     int error;
 
 #if defined(_MSC_VER)  &&  _MSC_VER >= 1400
@@ -766,8 +756,7 @@ dirent_wcstombs_s(
     char *mbstr,
     size_t sizeInBytes, /* max size of mbstr */
     const wchar_t *wcstr,
-    size_t count)
-{
+    size_t count) {
     int error;
 
 #if defined(_MSC_VER)  &&  _MSC_VER >= 1400
@@ -815,8 +804,7 @@ dirent_wcstombs_s(
 /* Set errno variable */
 static void
 dirent_set_errno(
-    int error)
-{
+    int error) {
 #if defined(_MSC_VER)  &&  _MSC_VER >= 1400
 
     /* Microsoft Visual Studio 2005 and later */

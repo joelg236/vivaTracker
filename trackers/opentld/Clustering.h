@@ -32,15 +32,13 @@
 
 #include "DetectionResult.h"
 
-namespace tld
-{
+namespace tld {
 
-class Clustering
-{
+class Clustering {
     void calcMeanRect(std::vector<int> * indices);
     void calcDistances(float *distances);
     void cluster(float *distances, int *clusterIndices);
-public:
+  public:
     int *windows;
     int numWindows;
 

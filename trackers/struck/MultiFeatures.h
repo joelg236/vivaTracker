@@ -34,15 +34,14 @@
 
 class Config;
 
-class MultiFeatures : public Features
-{
-public:
-	MultiFeatures(const std::vector<Features*>& features);
-	
-private:
-	std::vector<Features*> m_features;
-	
-	virtual void UpdateFeatureVector(const Sample& s);
+class MultiFeatures : public Features {
+  public:
+    MultiFeatures(const std::vector<Features*>& features);
+
+  private:
+    std::vector<Features*> m_features;
+
+    virtual void UpdateFeatureVector(const Sample& s);
 };
 
 #endif

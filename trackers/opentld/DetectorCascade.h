@@ -34,19 +34,17 @@
 #include "NNClassifier.h"
 
 
-namespace tld
-{
+namespace tld {
 
 //Constants
 static const int TLD_WINDOW_SIZE = 5;
 static const int TLD_WINDOW_OFFSET_SIZE = 6;
 
-class DetectorCascade
-{
+class DetectorCascade {
     //Working data
     int numScales;
     cv::Size *scales;
-public:
+  public:
     //Configurable members
     int minScale;
     int maxScale;
@@ -91,7 +89,7 @@ public:
 
     void release();
     void cleanPreviousData();
-    void detect(const cv::Mat &img);
+    void detect(const cv::Mat& img);
 };
 
 } /* namespace tld */

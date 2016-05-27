@@ -1,6 +1,6 @@
 /**************************************************************************************************
  **************************************************************************************************
- 
+
     BSD 3-Clause License (https://www.tldrlegal.com/l/bsd3)
 
     Copyright (c) 2015 Andrés Solís Montero <http://www.solism.ca>, All rights reserved.
@@ -28,7 +28,7 @@
     THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
     OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
     OF THE POSSIBILITY OF SUCH DAMAGE.
- 
+
  **************************************************************************************************
  **************************************************************************************************/
 #ifndef __viva__utils__
@@ -44,96 +44,95 @@
 #include <sys/types.h>
 
 #ifdef _MSC_VER
-	#include "direntVS.h"
-    #include <time.h>
+#include "direntVS.h"
+#include <time.h>
 #else
-	#include <dirent.h>
+#include <dirent.h>
 #endif
 
 using namespace std;
 using namespace cv;
 
-namespace viva
-{
-    /**
-     * Set of custom keys used in the GUI.
-     * The ESC key will exit the applicaiton
-     * The SPACE will pause and resume the video sequence
-     */
-    struct Keys
-    {
-        const static int ESC;
-		const static int TAB;
-		const static int SPACE;
-        const static int NONE;
-        const static int n;
-        const static int c;
-    };
-    
+namespace viva {
+/**
+ * Set of custom keys used in the GUI.
+ * The ESC key will exit the applicaiton
+ * The SPACE will pause and resume the video sequence
+ */
+struct Keys {
+    const static int ESC;
+    const static int TAB;
+    const static int SPACE;
+    const static int NONE;
+    const static int n;
+    const static int c;
+};
+
+
+/**
+ * Set of static functions related to file I/0 operations
+ */
+class Files {
+  public:
+
+    const static string PATH_SEPARATOR;
 
     /**
-     * Set of static functions related to file I/0 operations
+     * Returns a temporary filename inside folder
      */
-    class Files
-    {
-    public:
+    static string tmpFilenameInFolder(const string& folder = "",
+                                      const string& ext = ".jpg");
 
-        const static string PATH_SEPARATOR;
+    static Rect bestSquareFrom(Rect& rectangle);
 
-        /**
-         * Returns a temporary filename inside folder
-         */
-        static string tmpFilenameInFolder(const string &folder = "",
-                                          const string &ext = ".jpg");
+    static void saveSquaredIn(const Mat& image,
+                              string folder,
+                              int side = 200);
 
-        static Rect bestSquareFrom(Rect &rectangle);
-        
-        static void saveSquaredIn(const Mat &image,
-                                  string folder,
-                                  int side = 200);
+    /**
+     * List directory content and returns it in a vector
+     */
+    static void listdir(const string& dirname, vector<string>& files,
+                        bool returnPaths = true);
+    /**
+     * List a directory content and returns a vector of the images contined in it.
+     */
+    static void listImages(const string& dirname, vector<string>& files,
+                           bool returnPaths = true);
 
-        /**
-         * List directory content and returns it in a vector
-         */
-        static void listdir(const string &dirname, vector<string> &files, bool returnPaths = true);
-        /**
-         * List a directory content and returns a vector of the images contined in it.
-         */
-        static void listImages(const string &dirname, vector<string> &files, bool returnPaths = true);
+    /**
+     * Check if path is a directory
+     */
+    static bool isDir(const string& fullpath);
+    /**
+     * Check if path is a regular file
+     */
+    static bool isFile(const string& fullpath);
+    /**
+     * Creates a directory in the specified path
+     */
+    static void makeDir(const string& fullpath);
+    /**
+     * Checks if the fullpath exits
+     */
+    static bool exists(const string& fullpath);
 
-        /**
-         * Check if path is a directory
-         */
-		static bool isDir(const string &fullpath);
-        /**
-         * Check if path is a regular file
-         */
-        static bool isFile(const string &fullpath);
-        /**
-         * Creates a directory in the specified path
-         */
-		static void makeDir(const string &fullpath);
-        /**
-         * Checks if the fullpath exits
-         */
-		static bool exists(const string &fullpath);
+    /**
+     * Returns the extension of the filename
+     */
+    static void getExtension(const string& filename, string& extension);
+    /**
+     * Returns the filename of file in the path
+     */
+    static void getFilename(const string& path, string& filename);
+    /**
+     * Returns the basename of file in the path
+     */
+    static void getBasename(const string& path, string& base);
+};
 
-        /**
-         * Returns the extension of the filename
-         */
-		static void getExtension(const string &filename, string &extension);
-        /**
-         * Returns the filename of file in the path
-         */
-		static void getFilename(const string &path, string &filename);
-        /**
-         * Returns the basename of file in the path
-         */
-        static void getBasename(const string &path, string &base);
-    };
-    
-    
-    
+
+
 
 }
 

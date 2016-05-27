@@ -33,12 +33,10 @@
 
 #include "DetectionResult.h"
 
-namespace tld
-{
+namespace tld {
 
-class ForegroundDetector
-{
-public:
+class ForegroundDetector {
+  public:
     int fgThreshold;
     int minBlobSize;
     cv::Mat bgImg;
@@ -47,7 +45,7 @@ public:
     ForegroundDetector();
     virtual ~ForegroundDetector();
     void release();
-    void nextIteration(const cv::Mat &img);
+    void nextIteration(const cv::Mat& img);
     bool isActive();
 };
 

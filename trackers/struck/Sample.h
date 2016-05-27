@@ -33,39 +33,35 @@
 
 #include <vector>
 
-class Sample
-{
-public:
-	Sample(const ImageRep& image, const FloatRect& roi) :
-		m_image(image),
-		m_roi(roi)
-	{
-	}
-	
-	inline const ImageRep& GetImage() const { return m_image; }
-	inline const FloatRect& GetROI() const { return m_roi; }
+class Sample {
+  public:
+    Sample(const ImageRep& image, const FloatRect& roi) :
+        m_image(image),
+        m_roi(roi) {
+    }
 
-private:
-	const ImageRep& m_image;
-	FloatRect m_roi;
+    inline const ImageRep& GetImage() const { return m_image; }
+    inline const FloatRect& GetROI() const { return m_roi; }
+
+  private:
+    const ImageRep& m_image;
+    FloatRect m_roi;
 };
 
-class MultiSample
-{
-public:
-	MultiSample(const ImageRep& image, const std::vector<FloatRect>& rects) :
-		m_image(image),
-		m_rects(rects)
-	{
-	}
-	
-	inline const ImageRep& GetImage() const { return m_image; }
-	inline const std::vector<FloatRect>& GetRects() const { return m_rects; }
-	inline Sample GetSample(int i) const { return Sample(m_image, m_rects[i]); }
+class MultiSample {
+  public:
+    MultiSample(const ImageRep& image, const std::vector<FloatRect>& rects) :
+        m_image(image),
+        m_rects(rects) {
+    }
 
-private:
-	const ImageRep& m_image;
-	std::vector<FloatRect> m_rects;
+    inline const ImageRep& GetImage() const { return m_image; }
+    inline const std::vector<FloatRect>& GetRects() const { return m_rects; }
+    inline Sample GetSample(int i) const { return Sample(m_image, m_rects[i]); }
+
+  private:
+    const ImageRep& m_image;
+    std::vector<FloatRect> m_rects;
 };
 
 #endif

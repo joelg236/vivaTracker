@@ -8,11 +8,10 @@
 #include "complexmat.hpp"
 #include "tracker.h"
 
-struct BBox_c
-{
+struct BBox_c {
     double cx, cy, w, h;
 
-    inline void scale(double factor){
+    inline void scale(double factor) {
         cx *= factor;
         cy *= factor;
         w  *= factor;
@@ -21,9 +20,8 @@ struct BBox_c
 };
 
 
-class KCF_Tracker: public Tracker
-{
-public:
+class KCF_Tracker: public Tracker {
+  public:
 
     /*
     padding             ... extra area surrounding the target           (1.5)
@@ -33,25 +31,26 @@ public:
     output_sigma_factor ... spatial bandwidth (proportional to target)  (0.1)
     cell_size           ... hog cell size                               (4)
     */
-    KCF_Tracker(double padding, double kernel_sigma, double lambda, double interp_factor, double output_sigma_factor, int cell_size) :
-        p_padding(padding), p_output_sigma_factor(output_sigma_factor), p_kernel_sigma(kernel_sigma),
+    KCF_Tracker(double padding, double kernel_sigma, double lambda,
+                double interp_factor, double output_sigma_factor, int cell_size) :
+        p_padding(padding), p_output_sigma_factor(output_sigma_factor),
+        p_kernel_sigma(kernel_sigma),
         p_lambda(lambda), p_interp_factor(interp_factor), p_cell_size(cell_size) {}
     KCF_Tracker() {}
 
     // Init/re-init methods
-    void init(const cv::Mat & img, BBox_c & bbox);
-    void setTrackerPose(BBox_c & bbox, cv::Mat & img);
-    void updateTrackerPosition(BBox_c & bbox);
+    void init(const cv::Mat& img, BBox_c& bbox);
+    void setTrackerPose(BBox_c& bbox, cv::Mat& img);
+    void updateTrackerPosition(BBox_c& bbox);
 
     // frame-to-frame object tracking
-    void track(const cv::Mat & img);
+    void track(const cv::Mat& img);
     BBox_c getBBox();
-    
-    
+
+
     /* Tracker interface */
-    
-    virtual void initialize(const cv::Mat &image, const cv::Rect &roi)
-    {
+
+    virtual void initialize(const cv::Mat& image, const cv::Rect& roi) {
         BBox_c box;
         box.cx = roi.x;
         box.cy = roi.y;
@@ -59,27 +58,26 @@ public:
         box.h  = roi.height;
         init(image, box);
     }
-    void virtual processFrame(const cv::Mat &image)
-    {
+    void virtual processFrame(const cv::Mat& image) {
         track(image);
     }
-    void virtual getTrackedArea(vector<Point2f> &pts)
-    {
+    void virtual getTrackedArea(vector<Point2f>& pts) {
         BBox_c box = getBBox();
         pts = { Point2f(box.cx, box.cy),
-                Point2f(box.cx+ box.w, box.cy),
-                Point2f(box.cx+ box.w, box.cy + box.h),
-                Point2f(box.cx, box.cy + box.h)};
-        
+                Point2f(box.cx + box.w, box.cy),
+                Point2f(box.cx + box.w, box.cy + box.h),
+                Point2f(box.cx, box.cy + box.h)
+              };
+
     }
     string virtual getDescription() { return "Tomas Vojir. KCF2: Kernelized Correlation Filter. 2014";};
-    
 
-    
-    
-    
 
-private:
+
+
+
+
+  private:
     BBox_c p_pose;
     bool p_resize_image = false;
 
@@ -88,7 +86,8 @@ private:
     double p_output_sigma;
     double p_kernel_sigma = 0.5;    //def = 0.5
     double p_lambda = 1e-4;         //regularization in learning step
-    double p_interp_factor = 0.02;  //def = 0.02, linear interpolation factor for adaptation
+    double p_interp_factor =
+        0.02;  //def = 0.02, linear interpolation factor for adaptation
     int p_cell_size = 4;            //4 for hog (= bin_size)
     int p_windows_size[2];
     cv::Mat p_cos_window;
@@ -103,17 +102,19 @@ private:
     ComplexMat p_model_xf;
 
     //helping functions
-    cv::Mat get_subwindow(const cv::Mat & input, int cx, int cy, int size_x, int size_y);
+    cv::Mat get_subwindow(const cv::Mat& input, int cx, int cy, int size_x,
+                          int size_y);
     cv::Mat gaussian_shaped_labels(double sigma, int dim1, int dim2);
-    ComplexMat gaussian_correlation(const ComplexMat & xf, const ComplexMat & yf, double sigma, bool auto_correlation = false);
-    cv::Mat circshift(const cv::Mat & patch, int x_rot, int y_rot);
+    ComplexMat gaussian_correlation(const ComplexMat& xf, const ComplexMat& yf,
+                                    double sigma, bool auto_correlation = false);
+    cv::Mat circshift(const cv::Mat& patch, int x_rot, int y_rot);
     cv::Mat cosine_window_function(int dim1, int dim2);
-    ComplexMat fft2(const cv::Mat & input);
-    ComplexMat fft2(const std::vector<cv::Mat> & input, const cv::Mat & cos_window);
-    cv::Mat ifft2(const ComplexMat & inputf);
+    ComplexMat fft2(const cv::Mat& input);
+    ComplexMat fft2(const std::vector<cv::Mat>& input, const cv::Mat& cos_window);
+    cv::Mat ifft2(const ComplexMat& inputf);
 
     //tests
-    friend void run_tests(KCF_Tracker & tracker, const std::vector<bool> & tests);
+    friend void run_tests(KCF_Tracker& tracker, const std::vector<bool>& tests);
 };
 
 #endif //KCF_HEADER_6565467831231

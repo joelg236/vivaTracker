@@ -33,13 +33,11 @@
 #include "NormalizedPatch.h"
 #include "DetectionResult.h"
 
-namespace tld
-{
+namespace tld {
 
-class NNClassifier
-{
+class NNClassifier {
     float ncc(float *f1, float *f2);
-public:
+  public:
     bool enabled;
 
     int *windows;
@@ -54,10 +52,10 @@ public:
 
     void release();
     float classifyPatch(NormalizedPatch *patch);
-    float classifyBB(const cv::Mat &img, cv::Rect *bb);
-    float classifyWindow(const cv::Mat &img, int windowIdx);
+    float classifyBB(const cv::Mat& img, cv::Rect *bb);
+    float classifyWindow(const cv::Mat& img, int windowIdx);
     void learn(std::vector<NormalizedPatch> patches);
-    bool filter(const cv::Mat &img, int windowIdx);
+    bool filter(const cv::Mat& img, int windowIdx);
 };
 
 } /* namespace tld */

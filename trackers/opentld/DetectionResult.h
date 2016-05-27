@@ -31,12 +31,10 @@
 
 #include <opencv/cv.h>
 
-namespace tld
-{
+namespace tld {
 
-class DetectionResult
-{
-public:
+class DetectionResult {
+  public:
     bool containsValidData;
     std::vector<cv::Rect>* fgList;
     float *posteriors;  /* Contains the posteriors for each slding window. Is of size numWindows. Allocated by tldInitClassifier. */

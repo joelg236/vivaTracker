@@ -32,16 +32,14 @@
 #include "MedianFlowTracker.h"
 #include "DetectorCascade.h"
 
-namespace tld
-{
+namespace tld {
 
-class TLD
-{
+class TLD {
     void storeCurrentData();
     void fuseHypotheses();
     void learn();
     void initialLearning();
-public:
+  public:
     bool trackerEnabled;
     bool detectorEnabled;
     bool learningEnabled;
@@ -62,8 +60,8 @@ public:
     TLD();
     virtual ~TLD();
     void release();
-    void selectObject(const cv::Mat &img, cv::Rect *bb);
-    void processImage(const cv::Mat &img);
+    void selectObject(const cv::Mat& img, cv::Rect *bb);
+    void processImage(const cv::Mat& img);
     void writeToFile(const char *path);
     void readFromFile(const char *path);
 };

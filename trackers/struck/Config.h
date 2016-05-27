@@ -34,60 +34,57 @@
 
 #define VERBOSE (0)
 
-class Config
-{
-public:
-	Config() { SetDefaults(); }
-	Config(const std::string& path);
-	
-	enum FeatureType
-	{
-		kFeatureTypeHaar,
-		kFeatureTypeRaw,
-		kFeatureTypeHistogram
-	};
+class Config {
+  public:
+    Config() { SetDefaults(); }
+    Config(const std::string& path);
 
-	enum KernelType
-	{
-		kKernelTypeLinear,
-		kKernelTypeGaussian,
-		kKernelTypeIntersection,
-		kKernelTypeChi2
-	};
+    enum FeatureType {
+        kFeatureTypeHaar,
+        kFeatureTypeRaw,
+        kFeatureTypeHistogram
+    };
 
-	struct FeatureKernelPair
-	{
-		FeatureType feature;
-		KernelType kernel;
-		std::vector<double> params;
-	};
-	
-	// In the original STRUCK source the frameWidth and frameHeight parameters were used to scale the image
-	// used in tracking. The config text file supplied in the original soure specified a (w,h) of (320, 240)
-	int								frameWidth;
-	int								frameHeight;
-	
-	int								seed;
-	int								searchRadius;
-	double							svmC;
-	int								svmBudgetSize;
-	std::vector<FeatureKernelPair>	features;
-	
-	friend std::ostream& operator<< (std::ostream& out, const Config& conf);
+    enum KernelType {
+        kKernelTypeLinear,
+        kKernelTypeGaussian,
+        kKernelTypeIntersection,
+        kKernelTypeChi2
+    };
 
-	// manual setting parameters
-	// s = seed
-	// radius = searchRadius
-	// sC = svmC
-	// budget = svmBudgetSize
-	// f = featureType
-	// k = kernelType
-	void SetParameters(const int &s, const int &radius, const double &sC, const int &budget, const std::string &f, const std::string &k);
-	
-private:
-	void SetDefaults();
-	static std::string FeatureName(FeatureType f);
-	static std::string KernelName(KernelType k);
+    struct FeatureKernelPair {
+        FeatureType feature;
+        KernelType kernel;
+        std::vector<double> params;
+    };
+
+    // In the original STRUCK source the frameWidth and frameHeight parameters were used to scale the image
+    // used in tracking. The config text file supplied in the original soure specified a (w,h) of (320, 240)
+    int                             frameWidth;
+    int                             frameHeight;
+
+    int                             seed;
+    int                             searchRadius;
+    double                          svmC;
+    int                             svmBudgetSize;
+    std::vector<FeatureKernelPair>  features;
+
+    friend std::ostream& operator<< (std::ostream& out, const Config& conf);
+
+    // manual setting parameters
+    // s = seed
+    // radius = searchRadius
+    // sC = svmC
+    // budget = svmBudgetSize
+    // f = featureType
+    // k = kernelType
+    void SetParameters(const int& s, const int& radius, const double& sC,
+                       const int& budget, const std::string& f, const std::string& k);
+
+  private:
+    void SetDefaults();
+    static std::string FeatureName(FeatureType f);
+    static std::string KernelName(KernelType k);
 };
 
 #endif

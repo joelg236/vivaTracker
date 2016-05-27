@@ -34,11 +34,12 @@
 
 class Config;
 
-class Sampler
-{
-public:
-	static std::vector<FloatRect> RadialSamples(FloatRect centre, int radius, int nr, int nt);
-	static std::vector<FloatRect> PixelSamples(FloatRect centre, int radius, bool halfSample = false);
+class Sampler {
+  public:
+    static std::vector<FloatRect> RadialSamples(FloatRect centre, int radius,
+            int nr, int nt);
+    static std::vector<FloatRect> PixelSamples(FloatRect centre, int radius,
+            bool halfSample = false);
 };
 
 #endif

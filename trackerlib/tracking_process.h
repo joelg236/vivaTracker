@@ -1,14 +1,14 @@
 /**************************************************************************************************
  **************************************************************************************************
- 
+
      BSD 3-Clause License (https://www.tldrlegal.com/l/bsd3)
-     
+
      Copyright (c) 2016 Andrés Solís Montero <http://www.solism.ca>, All rights reserved.
-     
-     
+
+
      Redistribution and use in source and binary forms, with or without modification,
      are permitted provided that the following conditions are met:
-     
+
      1. Redistributions of source code must retain the above copyright notice,
         this list of conditions and the following disclaimer.
      2. Redistributions in binary form must reproduce the above copyright notice,
@@ -17,7 +17,7 @@
      3. Neither the name of the copyright holder nor the names of its contributors
         may be used to endorse or promote products derived from this software
         without specific prior written permission.
-     
+
      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
      AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
      IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,7 +28,7 @@
      THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
      OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
      OF THE POSSIBILITY OF SUCH DAMAGE.
- 
+
  **************************************************************************************************
  **************************************************************************************************/
 
@@ -51,10 +51,9 @@ using namespace cv;
  *  by using the top-left and bottom-right corner selections
  *
  */
-class RectSelectArea
-{
+class RectSelectArea {
     int _state; /**< different states of a selection area: 0, 1, 2*/
-public:
+  public:
     vector<Point2f> _loc;
     /**
      * Default constructor
@@ -90,8 +89,7 @@ public:
  *  Custom color codes used by the Draw class
  *  The color are specified in BGR format (i.e., blue, gree, and red)
  */
-struct Color
-{
+struct Color {
     const static Scalar red;
     const static Scalar blue;
     const static Scalar green;
@@ -109,14 +107,17 @@ struct Color
  * functor class that is called each time an input frame is available form the
  * sequence and also handles mouse and keyboard events.
  */
-class TrackingProcess: public ProcessFrame
-{
-    Ptr<Tracker> tracker; /**< Pointer to tracker interface, holds the tracking algorithm created by TrackerFactory*/
-    RectSelectArea selectedArea; /**< Rectangular area selection in the video sequence */
+class TrackingProcess: public ProcessFrame {
+    Ptr<Tracker>
+    tracker; /**< Pointer to tracker interface, holds the tracking algorithm created by TrackerFactory*/
+    RectSelectArea
+    selectedArea; /**< Rectangular area selection in the video sequence */
     bool trackerInitialized;  /**< Identifies if the tracker has been initialized or not */
-    vector<vector<Point2f> > groundTruth; /**< ground truth data if available to the sequence*/
-    vector<vector<Point2f> > execution; /**< tracking area recorded for the sequence*/
-public:
+    vector<vector<Point2f> >
+    groundTruth; /**< ground truth data if available to the sequence*/
+    vector<vector<Point2f> >
+    execution; /**< tracking area recorded for the sequence*/
+  public:
 
     /**
      * Constructor of a tracking process
@@ -126,15 +127,16 @@ public:
      * @param gt:  ground-truth defined as a 2D list points.
      * The ground-truth area for frame number N can be found by gt[N].
      */
-    TrackingProcess(const Ptr<Tracker> &trk, const vector<vector<Point2f> > &gt):
-        tracker(trk), selectedArea(), trackerInitialized(false), groundTruth(gt), execution()
+    TrackingProcess(const Ptr<Tracker>& trk, const vector<vector<Point2f> >& gt):
+        tracker(trk), selectedArea(), trackerInitialized(false), groundTruth(gt),
+        execution()
     {}
 
     /*
      *  Set pointer to tracking algorithm
      *  @param trk: traking algorithm
      */
-    void setTracker(const Ptr<Tracker> &trk);
+    void setTracker(const Ptr<Tracker>& trk);
     /**
      * Override from ProcessFrame class in vivalib
      * Handles mouse left clicks. Used to defined new rectangular selection areas
@@ -159,7 +161,7 @@ public:
      * @param output: the processed tracking output image
      *
      */
-    void operator()(const size_t frameN, const Mat &frame, Mat &output);
+    void operator()(const size_t frameN, const Mat& frame, Mat& output);
 
     /**
      * Returns the currently tracking area info.
@@ -167,8 +169,7 @@ public:
      * It has the following format for each frame:
      * x1, y1, x2, y2, x3, y3, x4, y4
      */
-    void getTrackingInfo(vector<vector<Point2f> > &pts)
-    {
+    void getTrackingInfo(vector<vector<Point2f> >& pts) {
         pts = execution;
     }
 };
@@ -177,9 +178,8 @@ public:
  * Util class for drawing basic figures over the video sequence
  *
  */
-class Draw
-{
-public:
+class Draw {
+  public:
 
     /**
      * Draws the Rectangular selected area over the image using the specified color and thickness.
@@ -188,9 +188,9 @@ public:
      * @param color: color of selected area lines
      * @param thicknes: thickness of the selected area lines
      */
-    static void drawSelectedArea(Mat &image,
-                                 const RectSelectArea &area,
-                                 const Scalar &color = Color::red,
+    static void drawSelectedArea(Mat& image,
+                                 const RectSelectArea& area,
+                                 const Scalar& color = Color::red,
                                  int thickness = 3);
 
     /**
@@ -201,23 +201,23 @@ public:
      * @param shift: vector to add to each corner before drawing, by default vector(0,0)
      * @param thicknes: thickness of the selected area lines
      */
-    static void drawQuadrangle(Mat &frameOut,
-                               const vector<Point2f> &corners,
-                               const Scalar &color,
-                               const Point2f &shift = Point2f(0,0),
+    static void drawQuadrangle(Mat& frameOut,
+                               const vector<Point2f>& corners,
+                               const Scalar& color,
+                               const Point2f& shift = Point2f(0, 0),
                                const int thickness = 2);
 
     /**
      * Draws a four-sided polygon defined by four points instead of a list
      * @see drawQuadrangle(Mat &frameOut, const vector<Point2f> &corners, ...)
      */
-    static void drawQuadrangle(Mat &frameOut,
-                               const Point2f &one,
-                               const Point2f &two,
-                               const Point2f &three,
-                               const Point2f &four,
-                               const Scalar &color,
-                               const Point2f &shift = Point2f(0,0),
+    static void drawQuadrangle(Mat& frameOut,
+                               const Point2f& one,
+                               const Point2f& two,
+                               const Point2f& three,
+                               const Point2f& four,
+                               const Scalar& color,
+                               const Point2f& shift = Point2f(0, 0),
                                const int thickness = 2);
 
 };

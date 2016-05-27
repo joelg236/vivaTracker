@@ -35,17 +35,16 @@
 
 class Config;
 
-class HaarFeatures : public Features
-{
-public:
-	HaarFeatures(const Config& conf);
-	
-private:
-	std::vector<HaarFeature> m_features;
-	
-	virtual void UpdateFeatureVector(const Sample& s);
-	
-	void GenerateSystematic();
+class HaarFeatures : public Features {
+  public:
+    HaarFeatures(const Config& conf);
+
+  private:
+    std::vector<HaarFeature> m_features;
+
+    virtual void UpdateFeatureVector(const Sample& s);
+
+    void GenerateSystematic();
 };
 
 #endif
